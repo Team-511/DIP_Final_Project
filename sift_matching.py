@@ -1,12 +1,39 @@
 import numpy as np
 import cv2
 from matplotlib import pyplot as plt
+import imutils
+#8,10,9,7,6,5,2,4 3,1
+def mix_match(leftImage, warpedImage):
+        i1y, i1x = leftImage.shape[:2]
+        i2y, i2x = warpedImage.shape[:2]
+        for i in range(0, i1x):
+            for j in range(0, i1y):
+                try:
+                    if(np.array_equal(leftImage[j,i],np.array([0,0,0])) and  \
+                        np.array_equal(warpedImage[j,i],np.array([0,0,0]))):
+                        # print "BLACK"
+                        # instead of just putting it with black,
+                        # take average of all nearby values and avg it.
+                        warpedImage[j,i] = [0, 0, 0]
+                    else:
+                        if(np.array_equal(warpedImage[j,i],[0,0,0])):
+                            # print "PIXEL"
+                            warpedImage[j,i] = leftImage[j,i]
+                        else:
+                            if not np.array_equal(leftImage[j,i], [0,0,0]):
+                                bl,gl,rl = leftImage[j,i]
+                                warpedImage[j, i] = [bl,gl,rl]
+                except:
+                    pass
+        # cv2.imshow("waRPED mix", warpedImage)
+        # cv2.waitKey()
+        return warpedImage
 
 MIN_MATCH_COUNT = 10
 
 img1 = cv2.imread('./example1.jpg',0)          # queryImage
 img2 = cv2.imread('./example1_2.jpg',0) # trainImage
-
+im2 = img2.copy()
 # Initiate SIFT detector
 sift = cv2.xfeatures2d.SIFT_create()
 
@@ -54,5 +81,9 @@ draw_params = dict(matchColor = (0,0,255), # draw matches in green color
 img3 = cv2.drawMatches(img1,kp1,img2,kp2,good,None,**draw_params)
 
 height, width = img1.shape
-im1Reg = cv2.warpPerspective(img1, M, (width, height))
-plt.imshow(im1Reg , 'gray'),plt.show()
+im2Reg = cv2.warpPerspective(im2, M, (width, height))
+# stitch = mix_match(img1,im2)
+result = cv2.warpPerspective(im2, M,(im2.shape[1] + img1.shape[1], im2.shape[0]))
+# print(result.shape)
+result[0:img1.shape[0], img1.shape[1]:im2.shape[1]+img1.shape[1]] = im2
+plt.imshow(result , 'gray'),plt.show()
