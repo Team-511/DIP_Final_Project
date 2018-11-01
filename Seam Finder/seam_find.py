@@ -9,7 +9,6 @@ from matplotlib import pyplot as plt
 
 
 #to find the coordinates for the intersection of the two images
-#the offset is chosen for showing the seam between the stitched images.
 def intersect(im1,off1,im2,off2):
 	return tuple(np.abs(np.subtract(np.minimum(np.add(off1, im1), np.add(off2, im2)), np.maximum(off1, off2))))
 
