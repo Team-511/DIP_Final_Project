@@ -1,5 +1,5 @@
 '''
-This files finds a seam between two images by minimizing a predefined cost function.
+This file finds a seam between two images by minimizing a predefined cost function.
 The cost of the seam defines the alignment quality of the two images.
 '''
 import cv2 as cv
