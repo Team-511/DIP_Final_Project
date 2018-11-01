@@ -73,15 +73,15 @@ def stitch_image(image, patch, offset, show_seam):
     res_img[offset[0]:offset[0] + overlap.shape[0], offset[1]:offset[1] + overlap.shape[1]] = overlap[:, :]
     return res_img.astype(np.uint8) 
 
-image1 = cv.imread('night1.png', 0)
+image1 = cv.imread('ship1.png', 0)
 #patch = np.copy(image)
-image2 = cv.imread('night2.png', 0)
+image2 = cv.imread('ship2.png', 0)
 #image = stitch_patch(image, patch, (400, 100), 1)
-res_image = stitch_image(image1, image2, (50, 700),1) # the offset value has been given manually for now.
+res_image = stitch_image(image1, image2, (0, 700),1) # the offset value has been given manually for now.
 #image = stitch_patch(image, patch, (200, 600), 1)
 #image = stitch_patch(image, patch, (0, 250), 1)
 #cv2.imwrite('Stiched_Image.png',image)
-
+'''
 fig,ax = plt.subplots(1,3)
 ax[0].imshow(image1,'gray')
 ax[0].set_title('Image 1')
@@ -94,6 +94,7 @@ ax[2].axis('off')
 ax[2].set_title('Stitched Image')
 #ax.imshow(stitch_image,'gray')
 plt.savefig('Stiched_Image.jpg')
-
+'''
 #cv.imshow("Result", image)
 #cv.waitKey(0)
+cv.imwrite('stitched_img_ship.jpg',res_image)
