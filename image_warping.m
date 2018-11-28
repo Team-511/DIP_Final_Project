@@ -1,9 +1,7 @@
-function [warped_img2] = image_warping(image1,H)
-    ch = 0;
-    cw = 0;
-    img = image1;
-    Hg = H;
-
+% This code is an adaptation of c++ code of APAP
+function [warped_img2] = image_warping(ch,cw,img2,H,off)
+    canvn = ch
+    canvm = cw
 
     ch1canv = 0;
     ch2canv = canvn*canvm;
@@ -72,3 +70,4 @@ function [warped_img2] = image_warping(image1,H)
             end;
         end;
     end;
+
